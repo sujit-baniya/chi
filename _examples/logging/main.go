@@ -16,8 +16,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	chi "github.com/PhilipJovanovic/phi/v5"
+	"github.com/PhilipJovanovic/phi/v5/middleware"
 	"github.com/sirupsen/logrus"
 )
 

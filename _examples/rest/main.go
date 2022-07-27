@@ -48,8 +48,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	chi "github.com/PhilipJovanovic/phi/v5"
+	"github.com/PhilipJovanovic/phi/v5/middleware"
 	"github.com/go-chi/docgen"
 	"github.com/go-chi/render"
 )
@@ -106,7 +106,7 @@ func main() {
 	if *routes {
 		// fmt.Println(docgen.JSONRoutesDoc(r))
 		fmt.Println(docgen.MarkdownRoutesDoc(r, docgen.MarkdownOpts{
-			ProjectPath: "github.com/go-chi/chi/v5",
+			ProjectPath: "github.com/PhilipJovanovic/phi/v5",
 			Intro:       "Welcome to the chi/_examples/rest generated docs.",
 		}))
 		return

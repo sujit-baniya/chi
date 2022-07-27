@@ -1,5 +1,5 @@
 //
-// Package chi is a small, idiomatic and composable router for building HTTP services.
+// package phi is a small, idiomatic and composable router for building HTTP services.
 //
 // chi requires Go 1.10 or newer.
 //
@@ -9,8 +9,8 @@
 //  import (
 //  	"net/http"
 //
-//  	"github.com/go-chi/chi/v5"
-//  	"github.com/go-chi/chi/v5/middleware"
+//  	"github.com/PhilipJovanovic/phi/v5"
+//  	"github.com/PhilipJovanovic/phi/v5/middleware"
 //  )
 //
 //  func main() {
@@ -53,7 +53,7 @@
 //  "/page/*/index" also matches "/page/intro/latest"
 //  "/date/{yyyy:\\d\\d\\d\\d}/{mm:\\d\\d}/{dd:\\d\\d}" matches "/date/2017/04/01"
 //
-package chi
+package phi
 
 import "net/http"
 

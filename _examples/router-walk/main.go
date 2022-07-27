@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/go-chi/chi/v5"
+	chi "github.com/PhilipJovanovic/phi/v5"
 )
 
 func main() {

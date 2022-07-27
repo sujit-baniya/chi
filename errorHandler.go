@@ -1,13 +1,27 @@
 package phi
 
-import "net/http"
+import (
+	"errors"
+	"net/http"
+)
 
-type Handler func(w http.ResponseWriter, r *http.Request) error
+var (
+	handler = func(w http.ResponseWriter, r *http.Request) error { return nil }
+)
 
-func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+type ErrorHandler func(w http.ResponseWriter, r *http.Request) error
+
+func (h ErrorHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h(w, r); err != nil {
-		// handle returned error here.
-		w.WriteHeader(503)
-		w.Write([]byte("bad"))
+		handler(w, r)
 	}
+}
+
+func SetErrorHandler(fn ErrorHandler) error {
+	if fn == nil {
+		return errors.New("couldn't set empty error handling function")
+	}
+
+	handler = fn
+	return nil
 }

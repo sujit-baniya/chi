@@ -105,7 +105,11 @@ type Router interface {
 	Put(pattern string, h http.HandlerFunc)
 	Trace(pattern string, h http.HandlerFunc)
 
-	GetE(pattern string, h http.Handler)
+	// HTTP-method with error handling functionality
+	GET(pattern string, h func(w http.ResponseWriter, r *http.Request) error)
+	POST(pattern string, h func(w http.ResponseWriter, r *http.Request) error)
+	PUT(pattern string, h func(w http.ResponseWriter, r *http.Request) error)
+	DELETE(pattern string, h func(w http.ResponseWriter, r *http.Request) error)
 
 	// NotFound defines a handler to respond whenever a route could
 	// not be found.

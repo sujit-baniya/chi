@@ -150,12 +150,6 @@ func (mx *Mux) Get(pattern string, handlerFn http.HandlerFunc) {
 	mx.handle(mGET, pattern, handlerFn)
 }
 
-// Get adds the route `pattern` that matches a GET http method to
-// execute the `handlerFn` http.HandlerFunc.
-func (mx *Mux) GetE(pattern string, handler http.Handler) {
-	mx.handle(mGET, pattern, handler)
-}
-
 // Head adds the route `pattern` that matches a HEAD http method to
 // execute the `handlerFn` http.HandlerFunc.
 func (mx *Mux) Head(pattern string, handlerFn http.HandlerFunc) {
@@ -190,6 +184,30 @@ func (mx *Mux) Put(pattern string, handlerFn http.HandlerFunc) {
 // execute the `handlerFn` http.HandlerFunc.
 func (mx *Mux) Trace(pattern string, handlerFn http.HandlerFunc) {
 	mx.handle(mTRACE, pattern, handlerFn)
+}
+
+// Get adds the route `pattern` that matches a GET http method to
+// execute the `handlerFn` http.HandlerFunc wrapped into errorHandler functionality.
+func (mx *Mux) GET(pattern string, handler func(w http.ResponseWriter, r *http.Request) error) {
+	mx.handle(mGET, pattern, ErrorHandler(handler))
+}
+
+// Get adds the route `pattern` that matches a GET http method to
+// execute the `handlerFn` http.HandlerFunc wrapped into errorHandler functionality.
+func (mx *Mux) POST(pattern string, handler func(w http.ResponseWriter, r *http.Request) error) {
+	mx.handle(mPOST, pattern, ErrorHandler(handler))
+}
+
+// Get adds the route `pattern` that matches a GET http method to
+// execute the `handlerFn` http.HandlerFunc wrapped into errorHandler functionality.
+func (mx *Mux) PUT(pattern string, handler func(w http.ResponseWriter, r *http.Request) error) {
+	mx.handle(mPUT, pattern, ErrorHandler(handler))
+}
+
+// Get adds the route `pattern` that matches a GET http method to
+// execute the `handlerFn` http.HandlerFunc wrapped into errorHandler functionality.
+func (mx *Mux) DELETE(pattern string, handler func(w http.ResponseWriter, r *http.Request) error) {
+	mx.handle(mDELETE, pattern, ErrorHandler(handler))
 }
 
 // NotFound sets a custom http.HandlerFunc for routing paths that could

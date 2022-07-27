@@ -15,8 +15,8 @@ public API service, which in turn powers all of our client-side applications.
 The key considerations of phi's design are: project structure, maintainability, standard http
 handlers (stdlib-only), developer productivity, and deconstructing a large system into many small
 parts. The core router `github.com/go-phi/phi` is quite small (less than 1000 LOC), but we've also
-included some useful/optional subpackages: [middleware](/middleware), [render](https://github.com/go-phi/render)
-and [docgen](https://github.com/go-phi/docgen). We hope you enjoy it too!
+included some useful/optional subpackages: [middleware](/middleware), [render](github.com/PhilipJovanovic/phi/render)
+and [docgen](github.com/PhilipJovanovic/phi/docgen). We hope you enjoy it too!
 
 ## Install
 
@@ -30,15 +30,15 @@ and [docgen](https://github.com/go-phi/docgen). We hope you enjoy it too!
 * **100% compatible with net/http** - use any http or middleware pkg in the ecosystem that is also compatible with `net/http`
 * **Designed for modular/composable APIs** - middlewares, inline middlewares, route groups and sub-router mounting
 * **Context control** - built on new `context` package, providing value chaining, cancellations and timeouts
-* **Robust** - in production at Pressly, Cloudflare, Heroku, 99Designs, and many others (see [discussion](https://github.com/go-phi/phi/issues/91))
+* **Robust** - in production at Pressly, Cloudflare, Heroku, 99Designs, and many others (see [discussion](github.com/PhilipJovanovic/phi/phi/issues/91))
 * **Doc generation** - `docgen` auto-generates routing documentation from your source to JSON or Markdown
-* **Go.mod support** - as of v5, go.mod support (see [CHANGELOG](https://github.com/go-phi/phi/blob/master/CHANGELOG.md))
+* **Go.mod support** - as of v5, go.mod support (see [CHANGELOG](github.com/PhilipJovanovic/phi/phi/blob/master/CHANGELOG.md))
 * **No external dependencies** - plain ol' Go stdlib + net/http
 
 
 ## Examples
 
-See [_examples/](https://github.com/go-phi/phi/blob/master/_examples/) for a variety of examples.
+See [_examples/](github.com/PhilipJovanovic/phi/phi/blob/master/_examples/) for a variety of examples.
 
 
 **As easy as:**
@@ -66,10 +66,10 @@ func main() {
 **REST Preview:**
 
 Here is a little preview of how routing looks like with phi. Also take a look at the generated routing docs
-in JSON ([routes.json](https://github.com/go-phi/phi/blob/master/_examples/rest/routes.json)) and in
-Markdown ([routes.md](https://github.com/go-phi/phi/blob/master/_examples/rest/routes.md)).
+in JSON ([routes.json](github.com/PhilipJovanovic/phi/phi/blob/master/_examples/rest/routes.json)) and in
+Markdown ([routes.md](github.com/PhilipJovanovic/phi/phi/blob/master/_examples/rest/routes.md)).
 
-I highly recommend reading the source of the [examples](https://github.com/go-phi/phi/blob/master/_examples/) listed
+I highly recommend reading the source of the [examples](github.com/PhilipJovanovic/phi/phi/blob/master/_examples/) listed
 above, they will show you all the features of phi and serve as a good form of documentation.
 
 ```go
@@ -400,20 +400,20 @@ with `net/http` can be used with phi's mux.
 
 ### Extra middlewares & packages
 
-Please see https://github.com/go-phi for additional packages.
+Please see github.com/PhilipJovanovic/phi for additional packages.
 
 --------------------------------------------------------------------------------------------------------------------
 | package                                            | description                                                 |
 |:---------------------------------------------------|:-------------------------------------------------------------
-| [cors](https://github.com/go-phi/cors)             | Cross-origin resource sharing (CORS)                        |
-| [docgen](https://github.com/go-phi/docgen)         | Print phi.Router routes at runtime                          |
-| [jwtauth](https://github.com/go-phi/jwtauth)       | JWT authentication                                          |
-| [hostrouter](https://github.com/go-phi/hostrouter) | Domain/host based request routing                           |
-| [httplog](https://github.com/go-phi/httplog)       | Small but powerful structured HTTP request logging          |
-| [httprate](https://github.com/go-phi/httprate)     | HTTP request rate limiter                                   |
-| [httptracer](https://github.com/go-phi/httptracer) | HTTP request performance tracing library                    |
-| [httpvcr](https://github.com/go-phi/httpvcr)       | Write deterministic tests for external sources              |
-| [stampede](https://github.com/go-phi/stampede)     | HTTP request coalescer                                      |
+| [cors](github.com/PhilipJovanovic/phi/cors)             | Cross-origin resource sharing (CORS)                        |
+| [docgen](github.com/PhilipJovanovic/phi/docgen)         | Print phi.Router routes at runtime                          |
+| [jwtauth](github.com/PhilipJovanovic/phi/jwtauth)       | JWT authentication                                          |
+| [hostrouter](github.com/PhilipJovanovic/phi/hostrouter) | Domain/host based request routing                           |
+| [httplog](github.com/PhilipJovanovic/phi/httplog)       | Small but powerful structured HTTP request logging          |
+| [httprate](github.com/PhilipJovanovic/phi/httprate)     | HTTP request rate limiter                                   |
+| [httptracer](github.com/PhilipJovanovic/phi/httptracer) | HTTP request performance tracing library                    |
+| [httpvcr](github.com/PhilipJovanovic/phi/httpvcr)       | Write deterministic tests for external sources              |
+| [stampede](github.com/PhilipJovanovic/phi/stampede)     | HTTP request coalescer                                      |
 --------------------------------------------------------------------------------------------------------------------
 
 

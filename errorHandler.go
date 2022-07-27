@@ -6,21 +6,21 @@ import (
 )
 
 var (
-	handler = func(w http.ResponseWriter, r *http.Request) error {
+	handler = func(w http.ResponseWriter, r *http.Request, e error) {
 		w.Write([]byte("unknown error"))
-		return nil
 	}
 )
 
 type ErrorHandler func(w http.ResponseWriter, r *http.Request) error
+type ErrorHandlerFunc func(w http.ResponseWriter, r *http.Request, e error)
 
 func (h ErrorHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h(w, r); err != nil {
-		handler(w, r)
+		handler(w, r, err)
 	}
 }
 
-func SetErrorHandler(fn ErrorHandler) error {
+func SetErrorHandler(fn ErrorHandlerFunc) error {
 	if fn == nil {
 		return errors.New("couldn't set empty error handling function")
 	}

@@ -152,7 +152,7 @@ func (mx *Mux) Get(pattern string, handlerFn http.HandlerFunc) {
 
 // Get adds the route `pattern` that matches a GET http method to
 // execute the `handlerFn` http.HandlerFunc.
-func (mx *Mux) GET(pattern string, handlerFn Handler) {
+func (mx *Mux) GetE(pattern string, handlerFn Handler) {
 	mx.handle(mGET, pattern, handlerFn)
 }
 

@@ -6,7 +6,10 @@ import (
 )
 
 var (
-	handler = func(w http.ResponseWriter, r *http.Request) error { return nil }
+	handler = func(w http.ResponseWriter, r *http.Request) error {
+		w.Write([]byte("unknown error"))
+		return nil
+	}
 )
 
 type ErrorHandler func(w http.ResponseWriter, r *http.Request) error

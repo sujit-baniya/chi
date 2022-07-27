@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/http/pprof"
 
-	phi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi"
 )
 
 // Profiler is a convenient subrouter used for mounting net/http/pprof. ie.

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/PhilipJovanovic/phi/v5"
+	"github.com/PhilipJovanovic/phi"
 )
 
 var (

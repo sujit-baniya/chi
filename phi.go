@@ -9,8 +9,8 @@
 //  import (
 //  	"net/http"
 //
-//  	"github.com/PhilipJovanovic/phi/v5"
-//  	"github.com/PhilipJovanovic/phi/v5/middleware"
+//  	"github.com/PhilipJovanovic/phi"
+//  	"github.com/PhilipJovanovic/phi/middleware"
 //  )
 //
 //  func main() {

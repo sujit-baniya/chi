@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	phi "github.com/PhilipJovanovic/phi/v5"
-	"github.com/PhilipJovanovic/phi/v5/middleware"
+	phi "github.com/PhilipJovanovic/phi"
+	"github.com/PhilipJovanovic/phi/middleware"
 )
 
 func init() {

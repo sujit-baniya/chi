@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/PhilipJovanovic/phi/v5"
+	"github.com/PhilipJovanovic/phi"
 )
 
 // StripSlashes is a middleware that will match request paths with a trailing

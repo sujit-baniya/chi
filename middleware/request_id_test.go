@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/PhilipJovanovic/phi/v5"
+	"github.com/PhilipJovanovic/phi"
 )
 
 func maintainDefaultRequestID() func() {

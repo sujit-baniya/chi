@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"path"
 
-	"github.com/PhilipJovanovic/phi/v5"
+	"github.com/PhilipJovanovic/phi"
 )
 
 // CleanPath middleware will clean out double slash mistakes from a user's request path.

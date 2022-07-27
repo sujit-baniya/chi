@@ -20,7 +20,7 @@ and [docgen](github.com/PhilipJovanovic/phi/docgen). We hope you enjoy it too!
 
 ## Install
 
-`go get -u github.com/PhilipJovanovic/phi/v5`
+`go get -u github.com/PhilipJovanovic/phi`
 
 
 ## Features
@@ -49,8 +49,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/PhilipJovanovic/phi/v5"
-	"github.com/PhilipJovanovic/phi/v5/middleware"
+	"github.com/PhilipJovanovic/phi"
+	"github.com/PhilipJovanovic/phi/middleware"
 )
 
 func main() {
@@ -76,8 +76,8 @@ above, they will show you all the features of phi and serve as a good form of do
 import (
   //...
   "context"
-  "github.com/PhilipJovanovic/phi/v5"
-  "github.com/PhilipJovanovic/phi/v5/middleware"
+  "github.com/PhilipJovanovic/phi"
+  "github.com/PhilipJovanovic/phi/middleware"
 )
 
 func main() {

@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/PhilipJovanovic/phi/v5"
+	"github.com/PhilipJovanovic/phi"
 )
 
 type usersResource struct{}

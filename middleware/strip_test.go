@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/PhilipJovanovic/phi/v5"
+	"github.com/PhilipJovanovic/phi"
 )
 
 func TestStripSlashes(t *testing.T) {

@@ -48,8 +48,8 @@ import (
 	"net/http"
 	"strings"
 
-	phi "github.com/PhilipJovanovic/phi/v5"
-	"github.com/PhilipJovanovic/phi/v5/middleware"
+	phi "github.com/PhilipJovanovic/phi"
+	"github.com/PhilipJovanovic/phi/middleware"
 	"github.com/go-phi/docgen"
 	"github.com/go-phi/render"
 )
@@ -106,7 +106,7 @@ func main() {
 	if *routes {
 		// fmt.Println(docgen.JSONRoutesDoc(r))
 		fmt.Println(docgen.MarkdownRoutesDoc(r, docgen.MarkdownOpts{
-			ProjectPath: "github.com/PhilipJovanovic/phi/v5",
+			ProjectPath: "github.com/PhilipJovanovic/phi",
 			Intro:       "Welcome to the phi/_examples/rest generated docs.",
 		}))
 		return

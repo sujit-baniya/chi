@@ -38,10 +38,10 @@
 
 ## v5.0.0 (2021-02-27)
 
-- phi v5, `github.com/PhilipJovanovic/phi/v5` introduces the adoption of Go's SIV to adhere to the current state-of-the-tools in Go.
+- phi v5, `github.com/PhilipJovanovic/phi` introduces the adoption of Go's SIV to adhere to the current state-of-the-tools in Go.
 - phi v1.5.x did not work out as planned, as the Go tooling is too powerful and phi's adoption is too wide.
   The most responsible thing to do for everyone's benefit is to just release v5 with SIV, so I present to you all,
-  phi v5 at `github.com/PhilipJovanovic/phi/v5`. I hope someday the developer experience and ergonomics I've been seeking
+  phi v5 at `github.com/PhilipJovanovic/phi`. I hope someday the developer experience and ergonomics I've been seeking
   will still come to fruition in some form, see https://github.com/golang/go/issues/44550
 - History of changes: see github.com/PhilipJovanovic/phi/phi/compare/v1.5.4...v5.0.0
 

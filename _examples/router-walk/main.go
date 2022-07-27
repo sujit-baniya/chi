@@ -5,16 +5,16 @@ import (
 	"net/http"
 	"strings"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 )
 
 func main() {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("root."))
 	})
 
-	r.Route("/road", func(r chi.Router) {
+	r.Route("/road", func(r phi.Router) {
 		r.Get("/left", func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("left road"))
 		})
@@ -31,7 +31,7 @@ func main() {
 		return nil
 	}
 
-	if err := chi.Walk(r, walkFunc); err != nil {
+	if err := phi.Walk(r, walkFunc); err != nil {
 		fmt.Printf("Logging err: %s\n", err.Error())
 	}
 }

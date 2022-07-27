@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 )
 
 type Handler func(w http.ResponseWriter, r *http.Request) error
@@ -18,7 +18,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Method("GET", "/", Handler(customHandler))
 	http.ListenAndServe(":3333", r)
 }

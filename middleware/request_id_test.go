@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 func maintainDefaultRequestID() func() {
@@ -50,7 +50,7 @@ func TestRequestID(t *testing.T) {
 	for _, test := range tests {
 		w := httptest.NewRecorder()
 
-		r := chi.NewRouter()
+		r := phi.NewRouter()
 
 		RequestIDHeader = test.requestIDHeader
 

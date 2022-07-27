@@ -6,8 +6,8 @@
 2. Download the sources and switch the working directory:
 
     ```bash
-    go get -u -d github.com/go-chi/chi
-    cd $GOPATH/src/github.com/go-chi/chi
+    go get -u -d github.com/go-phi/phi
+    cd $GOPATH/src/github.com/go-phi/phi
     ```
 
 ## Submitting a Pull Request
@@ -26,6 +26,6 @@ A typical workflow is:
 [go-install]: https://golang.org/doc/install
 [go-fork-tip]: http://blog.campoy.cat/2014/03/github-and-go-forking-pull-requests-and.html
 [fork]: https://help.github.com/articles/fork-a-repo
-[branch]: http://learn.github.com/p/branching.html
+[branch]: http://learn.github.com/p/branphing.html
 [git-help]: https://guides.github.com
 [pull-req]: https://help.github.com/articles/using-pull-requests

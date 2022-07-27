@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 func TestXRealIP(t *testing.T) {
@@ -13,7 +13,7 @@ func TestXRealIP(t *testing.T) {
 	req.Header.Add("X-Real-IP", "100.100.100.100")
 	w := httptest.NewRecorder()
 
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(RealIP)
 
 	realIP := ""
@@ -39,7 +39,7 @@ func TestXForwardForIP(t *testing.T) {
 		"100.100.100.100,200.200.200.200",
 	}
 
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(RealIP)
 
 	for _, v := range xForwardedForIPs {
@@ -71,7 +71,7 @@ func TestXForwardForXRealIPPrecedence(t *testing.T) {
 	req.Header.Add("X-Real-IP", "100.100.100.100")
 	w := httptest.NewRecorder()
 
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(RealIP)
 
 	realIP := ""
@@ -95,7 +95,7 @@ func TestIvalidIP(t *testing.T) {
 	req.Header.Add("X-Real-IP", "100.100.100.1000")
 	w := httptest.NewRecorder()
 
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(RealIP)
 
 	realIP := ""

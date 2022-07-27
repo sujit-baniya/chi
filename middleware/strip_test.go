@@ -7,11 +7,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 func TestStripSlashes(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	// This middleware must be mounted at the top level of the router, not at the end-handler
 	// because then it'll be too late and will end up in a 404
@@ -26,9 +26,9 @@ func TestStripSlashes(t *testing.T) {
 		w.Write([]byte("root"))
 	})
 
-	r.Route("/accounts/{accountID}", func(r chi.Router) {
+	r.Route("/accounts/{accountID}", func(r phi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			accountID := chi.URLParam(r, "accountID")
+			accountID := phi.URLParam(r, "accountID")
 			w.Write([]byte(accountID))
 		})
 	})
@@ -54,7 +54,7 @@ func TestStripSlashes(t *testing.T) {
 }
 
 func TestStripSlashesInRoute(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(404)
@@ -65,13 +65,13 @@ func TestStripSlashesInRoute(t *testing.T) {
 		w.Write([]byte("hi"))
 	})
 
-	r.Route("/accounts/{accountID}", func(r chi.Router) {
+	r.Route("/accounts/{accountID}", func(r phi.Router) {
 		r.Use(StripSlashes)
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("accounts index"))
 		})
 		r.Get("/query", func(w http.ResponseWriter, r *http.Request) {
-			accountID := chi.URLParam(r, "accountID")
+			accountID := phi.URLParam(r, "accountID")
 			w.Write([]byte(accountID))
 		})
 	})
@@ -100,7 +100,7 @@ func TestStripSlashesInRoute(t *testing.T) {
 }
 
 func TestRedirectSlashes(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	// This middleware must be mounted at the top level of the router, not at the end-handler
 	// because then it'll be too late and will end up in a 404
@@ -115,9 +115,9 @@ func TestRedirectSlashes(t *testing.T) {
 		w.Write([]byte("root"))
 	})
 
-	r.Route("/accounts/{accountID}", func(r chi.Router) {
+	r.Route("/accounts/{accountID}", func(r phi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			accountID := chi.URLParam(r, "accountID")
+			accountID := phi.URLParam(r, "accountID")
 			w.Write([]byte(accountID))
 		})
 	})
@@ -198,7 +198,7 @@ func TestRedirectSlashes(t *testing.T) {
 	}
 }
 
-// This tests a http.Handler that is not chi.Router
+// This tests a http.Handler that is not phi.Router
 // In these cases, the routeContext is nil
 func TestStripSlashesWithNilContext(t *testing.T) {
 	r := http.NewServeMux()

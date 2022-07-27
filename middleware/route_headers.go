@@ -11,8 +11,8 @@ import (
 // For example, lets say you'd like to setup multiple routers depending on the
 // request Host header, you could then do something as so:
 //
-// r := chi.NewRouter()
-// rSubdomain := chi.NewRouter()
+// r := phi.NewRouter()
+// rSubdomain := phi.NewRouter()
 //
 // r.Use(middleware.RouteHeaders().
 //   Route("Host", "example.com", middleware.New(r)).
@@ -27,7 +27,7 @@ import (
 // your origin servers you allow authorized requests, but for third-party public
 // requests, authorization is disabled.
 //
-// r := chi.NewRouter()
+// r := phi.NewRouter()
 //
 // r.Use(middleware.RouteHeaders().
 //   Route("Origin", "https://app.skyweaver.net", cors.Handler(cors.Options{
@@ -86,7 +86,7 @@ func (hr HeaderRouter) Handler(next http.Handler) http.Handler {
 			next.ServeHTTP(w, r)
 		}
 
-		// find first matching header route, and continue
+		// find first matphing header route, and continue
 		for header, matchers := range hr {
 			headerValue := r.Header.Get(header)
 			if headerValue == "" {

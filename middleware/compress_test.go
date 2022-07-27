@@ -11,11 +11,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 func TestCompressor(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	compressor := NewCompressor(5, "text/html", "text/css")
 	if len(compressor.encoders) != 0 || len(compressor.pooledEncoders) != 2 {

@@ -446,7 +446,7 @@ func TestTreeFindPattern(t *testing.T) {
 
 func debugPrintTree(parent int, i int, n *node, label byte) bool {
 	numEdges := 0
-	for _, nds := range n.children {
+	for _, nds := range n.phildren {
 		numEdges += len(nds)
 	}
 
@@ -461,7 +461,7 @@ func debugPrintTree(parent int, i int, n *node, label byte) bool {
 		log.Printf("[node %d parent:%d] typ:%d prefix:%s label:%s tail:%s numEdges:%d isLeaf:%v\n", i, parent, n.typ, n.prefix, string(label), string(n.tail), numEdges, n.isLeaf())
 	}
 	parent = i
-	for _, nds := range n.children {
+	for _, nds := range n.phildren {
 		for _, e := range nds {
 			i++
 			if debugPrintTree(parent, i, e, e.label) {

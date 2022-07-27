@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 var (
@@ -23,7 +23,7 @@ var (
 // Sample usage.. for url paths: `/articles/1`, `/articles/1.json` and `/articles/1.xml`
 //
 //  func routes() http.Handler {
-//    r := chi.NewRouter()
+//    r := phi.NewRouter()
 //    r.Use(middleware.URLFormat)
 //
 //    r.Get("/articles/{id}", ListArticles)
@@ -59,7 +59,7 @@ func URLFormat(next http.Handler) http.Handler {
 				idx += base
 				format = path[idx+1:]
 
-				rctx := chi.RouteContext(r.Context())
+				rctx := phi.RouteContext(r.Context())
 				rctx.RoutePath = path[:idx]
 			}
 		}

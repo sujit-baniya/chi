@@ -3,14 +3,14 @@ package middleware
 import (
 	"net/http"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 )
 
 // GetHead automatically route undefined HEAD requests to GET handlers.
 func GetHead(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "HEAD" {
-			rctx := chi.RouteContext(r.Context())
+			rctx := phi.RouteContext(r.Context())
 			routePath := rctx.RoutePath
 			if routePath == "" {
 				if r.URL.RawPath != "" {
@@ -21,7 +21,7 @@ func GetHead(next http.Handler) http.Handler {
 			}
 
 			// Temporary routing context to look-ahead before routing the request
-			tctx := chi.NewRouteContext()
+			tctx := phi.NewRouteContext()
 
 			// Attempt to find a HEAD handler for the routing path, if not found, traverse
 			// the router as through its a GET route, but proceed with the request

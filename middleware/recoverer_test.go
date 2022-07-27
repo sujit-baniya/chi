@@ -7,13 +7,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 func panicingHandler(http.ResponseWriter, *http.Request) { panic("foo") }
 
 func TestRecoverer(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	oldRecovererErrorWriter := recovererErrorWriter
 	defer func() { recovererErrorWriter = oldRecovererErrorWriter }()
@@ -51,7 +51,7 @@ func TestRecovererAbortHandler(t *testing.T) {
 
 	w := httptest.NewRecorder()
 
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(Recoverer)
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {

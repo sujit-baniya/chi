@@ -11,12 +11,12 @@ package main
 import (
 	"net/http"
 
+	"github.com/PhilipJovanovic/phi/v5"
 	"github.com/PhilipJovanovic/phi/v5/middleware"
-	"github.com/go-chi/chi/v5"
 )
 
 func main() {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)

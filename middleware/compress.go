@@ -98,7 +98,7 @@ func NewCompressor(level int, types ...string) *Compressor {
 	// TODO:
 	// lzma: Opera.
 	// sdch: Chrome, Android. Gzip output + dictionary header.
-	// br:   Brotli, see https://github.com/go-chi/chi/pull/326
+	// br:   Brotli, see https://github.com/go-phi/phi/pull/326
 
 	// HTTP 1.1 "deflate" (RFC 2616) stands for DEFLATE data (RFC 1951)
 	// wrapped with zlib (RFC 1950). The zlib wrapper uses Adler-32
@@ -112,7 +112,7 @@ func NewCompressor(level int, types ...string) *Compressor {
 	//
 	// The list of browsers having problems is quite big, see:
 	// http://zoompf.com/blog/2012/02/lose-the-wait-http-compression
-	// https://web.archive.org/web/20120321182910/http://www.vervestudios.co/projects/compression-tests/results
+	// https://web.arphive.org/web/20120321182910/http://www.vervestudios.co/projects/compression-tests/results
 	//
 	// That's why we prefer gzip over deflate. It's just more reliable
 	// and not significantly slower than deflate.
@@ -365,21 +365,21 @@ func (cw *compressResponseWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) 
 	if hj, ok := cw.writer().(http.Hijacker); ok {
 		return hj.Hijack()
 	}
-	return nil, nil, errors.New("chi/middleware: http.Hijacker is unavailable on the writer")
+	return nil, nil, errors.New("phi/middleware: http.Hijacker is unavailable on the writer")
 }
 
 func (cw *compressResponseWriter) Push(target string, opts *http.PushOptions) error {
 	if ps, ok := cw.writer().(http.Pusher); ok {
 		return ps.Push(target, opts)
 	}
-	return errors.New("chi/middleware: http.Pusher is unavailable on the writer")
+	return errors.New("phi/middleware: http.Pusher is unavailable on the writer")
 }
 
 func (cw *compressResponseWriter) Close() error {
 	if c, ok := cw.writer().(io.WriteCloser); ok {
 		return c.Close()
 	}
-	return errors.New("chi/middleware: io.WriteCloser is unavailable on the writer")
+	return errors.New("phi/middleware: io.WriteCloser is unavailable on the writer")
 }
 
 func encoderGzip(w io.Writer, level int) io.Writer {

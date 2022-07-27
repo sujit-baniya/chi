@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 func TestContentType(t *testing.T) {
@@ -19,37 +19,37 @@ func TestContentType(t *testing.T) {
 		want                int
 	}{
 		{
-			"should accept requests with a matching content type",
+			"should accept requests with a matphing content type",
 			"application/json; charset=UTF-8",
 			[]string{"application/json"},
 			http.StatusOK,
 		},
 		{
-			"should accept requests with a matching content type no charset",
+			"should accept requests with a matphing content type no charset",
 			"application/json",
 			[]string{"application/json"},
 			http.StatusOK,
 		},
 		{
-			"should accept requests with a matching content-type with extra values",
+			"should accept requests with a matphing content-type with extra values",
 			"application/json; foo=bar; charset=UTF-8; spam=eggs",
 			[]string{"application/json"},
 			http.StatusOK,
 		},
 		{
-			"should accept requests with a matching content type when multiple content types are supported",
+			"should accept requests with a matphing content type when multiple content types are supported",
 			"text/xml; charset=UTF-8",
 			[]string{"application/json", "text/xml"},
 			http.StatusOK,
 		},
 		{
-			"should not accept requests with a mismatching content type",
+			"should not accept requests with a mismatphing content type",
 			"text/plain; charset=latin-1",
 			[]string{"application/json"},
 			http.StatusUnsupportedMediaType,
 		},
 		{
-			"should not accept requests with a mismatching content type even if multiple content types are allowed",
+			"should not accept requests with a mismatphing content type even if multiple content types are allowed",
 			"text/plain; charset=Latin-1",
 			[]string{"application/json", "text/xml"},
 			http.StatusUnsupportedMediaType,
@@ -63,7 +63,7 @@ func TestContentType(t *testing.T) {
 
 			recorder := httptest.NewRecorder()
 
-			r := chi.NewRouter()
+			r := phi.NewRouter()
 			r.Use(AllowContentType(tt.allowedContentTypes...))
 			r.Post("/", func(w http.ResponseWriter, r *http.Request) {})
 

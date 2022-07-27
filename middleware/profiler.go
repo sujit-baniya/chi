@@ -6,20 +6,20 @@ import (
 	"net/http"
 	"net/http/pprof"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 )
 
 // Profiler is a convenient subrouter used for mounting net/http/pprof. ie.
 //
 //  func MyService() http.Handler {
-//    r := chi.NewRouter()
+//    r := phi.NewRouter()
 //    // ..middlewares
 //    r.Mount("/debug", middleware.Profiler())
 //    // ..routes
 //    return r
 //  }
 func Profiler() http.Handler {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(NoCache)
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {

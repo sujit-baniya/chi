@@ -1,7 +1,7 @@
 //
 // package phi is a small, idiomatic and composable router for building HTTP services.
 //
-// chi requires Go 1.10 or newer.
+// phi requires Go 1.10 or newer.
 //
 // Example:
 //  package main
@@ -14,7 +14,7 @@
 //  )
 //
 //  func main() {
-//  	r := chi.NewRouter()
+//  	r := phi.NewRouter()
 //  	r.Use(middleware.Logger)
 //  	r.Use(middleware.Recoverer)
 //
@@ -25,11 +25,11 @@
 //  	http.ListenAndServe(":3333", r)
 //  }
 //
-// See github.com/go-chi/chi/_examples/ for more in-depth examples.
+// See github.com/go-phi/phi/_examples/ for more in-depth examples.
 //
-// URL patterns allow for easy matching of path components in HTTP
-// requests. The matching components can then be accessed using
-// chi.URLParam(). All patterns must begin with a slash.
+// URL patterns allow for easy matphing of path components in HTTP
+// requests. The matphing components can then be accessed using
+// phi.URLParam(). All patterns must begin with a slash.
 //
 // A simple named placeholder {name} matches any sequence of characters
 // up to the next / or the end of the URL. Trailing slashes on paths must
@@ -62,7 +62,7 @@ func NewRouter() *Mux {
 	return NewMux()
 }
 
-// Router consisting of the core routing methods used by chi's Mux,
+// Router consisting of the core routing methods used by phi's Mux,
 // using only the standard net/http.
 type Router interface {
 	http.Handler

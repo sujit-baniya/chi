@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 func TestContentEncodingMiddleware(t *testing.T) {
@@ -68,7 +68,7 @@ func TestContentEncodingMiddleware(t *testing.T) {
 			}
 
 			w := httptest.NewRecorder()
-			router := chi.NewRouter()
+			router := phi.NewRouter()
 			router.Use(middleware)
 			router.Post("/", func(w http.ResponseWriter, r *http.Request) {})
 

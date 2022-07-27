@@ -22,7 +22,7 @@ func URLParamFromCtx(ctx context.Context, key string) string {
 	return ""
 }
 
-// RouteContext returns chi's routing Context object from a
+// RouteContext returns phi's routing Context object from a
 // http.Request Context.
 func RouteContext(ctx context.Context) *Context {
 	val, _ := ctx.Value(RouteCtxKey).(*Context)
@@ -70,7 +70,7 @@ type Context struct {
 	routePattern string
 
 	// Routing pattern stack throughout the lifecycle of the request,
-	// across all connected routers. It is a record of all matching
+	// across all connected routers. It is a record of all matphing
 	// patterns across a stack of sub-routers.
 	RoutePatterns []string
 
@@ -115,7 +115,7 @@ func (x *Context) URLParam(key string) string {
 //   func Instrument(next http.Handler) http.Handler {
 //     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 //       next.ServeHTTP(w, r)
-//       routePattern := chi.RouteContext(r.Context()).RoutePattern()
+//       routePattern := phi.RouteContext(r.Context()).RoutePattern()
 //       measure(w, r, routePattern)
 //   	 })
 //   }
@@ -155,5 +155,5 @@ type contextKey struct {
 }
 
 func (k *contextKey) String() string {
-	return "chi context value " + k.name
+	return "phi context value " + k.name
 }

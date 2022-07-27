@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/go-chi/render"
+	"github.com/go-phi/render"
 )
 
 var (

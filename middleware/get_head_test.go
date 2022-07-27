@@ -5,30 +5,30 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 func TestGetHead(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(GetHead)
 	r.Get("/hi", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("X-Test", "yes")
 		w.Write([]byte("bye"))
 	})
-	r.Route("/articles", func(r chi.Router) {
+	r.Route("/articles", func(r phi.Router) {
 		r.Get("/{id}", func(w http.ResponseWriter, r *http.Request) {
-			id := chi.URLParam(r, "id")
+			id := phi.URLParam(r, "id")
 			w.Header().Set("X-Article", id)
 			w.Write([]byte("article:" + id))
 		})
 	})
-	r.Route("/users", func(r chi.Router) {
+	r.Route("/users", func(r phi.Router) {
 		r.Head("/{id}", func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("X-User", "-")
 			w.Write([]byte("user"))
 		})
 		r.Get("/{id}", func(w http.ResponseWriter, r *http.Request) {
-			id := chi.URLParam(r, "id")
+			id := phi.URLParam(r, "id")
 			w.Header().Set("X-User", id)
 			w.Write([]byte("user:" + id))
 		})

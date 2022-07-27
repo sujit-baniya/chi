@@ -26,12 +26,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 	"github.com/PhilipJovanovic/phi/v5/middleware"
 )
 
 func main() {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(middleware.Logger)
 
 	// Index handler
@@ -50,7 +50,7 @@ func main() {
 
 // FileServer conveniently sets up a http.FileServer handler to serve
 // static files from a http.FileSystem.
-func FileServer(r chi.Router, path string, root http.FileSystem) {
+func FileServer(r phi.Router, path string, root http.FileSystem) {
 	if strings.ContainsAny(path, "{}*") {
 		panic("FileServer does not permit any URL parameters.")
 	}
@@ -62,7 +62,7 @@ func FileServer(r chi.Router, path string, root http.FileSystem) {
 	path += "*"
 
 	r.Get(path, func(w http.ResponseWriter, r *http.Request) {
-		rctx := chi.RouteContext(r.Context())
+		rctx := phi.RouteContext(r.Context())
 		pathPrefix := strings.TrimSuffix(rctx.RoutePattern(), "/*")
 		fs := http.StripPrefix(pathPrefix, http.FileServer(root))
 		fs.ServeHTTP(w, r)

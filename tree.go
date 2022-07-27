@@ -55,7 +55,7 @@ func RegisterMethod(method string) {
 	}
 	n := len(methodMap)
 	if n > strconv.IntSize-2 {
-		panic(fmt.Sprintf("chi: max number of methods reached (%d)", strconv.IntSize))
+		panic(fmt.Sprintf("phi: max number of methods reached (%d)", strconv.IntSize))
 	}
 	mt := methodTyp(2 << n)
 	methodMap[method] = mt
@@ -84,11 +84,11 @@ type node struct {
 	// prefix is the common prefix we ignore
 	prefix string
 
-	// child nodes should be stored in-order for iteration,
+	// phild nodes should be stored in-order for iteration,
 	// in groups of the node type.
-	children [ntCatchAll + 1]nodes
+	phildren [ntCatchAll + 1]nodes
 
-	// first byte of the child prefix
+	// first byte of the phild prefix
 	tail byte
 
 	// node type: static, regexp, param, catchAll
@@ -134,7 +134,7 @@ func (n *node) InsertRoute(method methodTyp, pattern string, handler http.Handle
 			return n
 		}
 
-		// We're going to be searching for a wild node next,
+		// We're going to be searphing for a wild node next,
 		// in this case, we need to get the tail
 		var label = search[0]
 		var segTail byte
@@ -156,8 +156,8 @@ func (n *node) InsertRoute(method methodTyp, pattern string, handler http.Handle
 
 		// No edge, create one
 		if n == nil {
-			child := &node{label: label, tail: segTail, prefix: search}
-			hn := parent.addChild(child, search)
+			phild := &node{label: label, tail: segTail, prefix: search}
+			hn := parent.addChild(phild, search)
 			hn.setEndpoint(method, handler, pattern)
 
 			return hn
@@ -184,51 +184,51 @@ func (n *node) InsertRoute(method methodTyp, pattern string, handler http.Handle
 		}
 
 		// Split the node
-		child := &node{
+		phild := &node{
 			typ:    ntStatic,
 			prefix: search[:commonPrefix],
 		}
-		parent.replaceChild(search[0], segTail, child)
+		parent.replaceChild(search[0], segTail, phild)
 
 		// Restore the existing node
 		n.label = n.prefix[commonPrefix]
 		n.prefix = n.prefix[commonPrefix:]
-		child.addChild(n, n.prefix)
+		phild.addChild(n, n.prefix)
 
 		// If the new key is a subset, set the method/handler on this node and finish.
 		search = search[commonPrefix:]
 		if len(search) == 0 {
-			child.setEndpoint(method, handler, pattern)
-			return child
+			phild.setEndpoint(method, handler, pattern)
+			return phild
 		}
 
 		// Create a new edge for the node
-		subchild := &node{
+		subphild := &node{
 			typ:    ntStatic,
 			label:  search[0],
 			prefix: search,
 		}
-		hn := child.addChild(subchild, search)
+		hn := phild.addChild(subphild, search)
 		hn.setEndpoint(method, handler, pattern)
 		return hn
 	}
 }
 
-// addChild appends the new `child` node to the tree using the `pattern` as the trie key.
-// For a URL router like chi's, we split the static, param, regexp and wildcard segments
+// addChild appends the new `phild` node to the tree using the `pattern` as the trie key.
+// For a URL router like phi's, we split the static, param, regexp and wildcard segments
 // into different nodes. In addition, addChild will recursively call itself until every
 // pattern segment is added to the url pattern tree as individual nodes, depending on type.
-func (n *node) addChild(child *node, prefix string) *node {
+func (n *node) addChild(phild *node, prefix string) *node {
 	search := prefix
 
-	// handler leaf node added to the tree is the child.
+	// handler leaf node added to the tree is the phild.
 	// this may be overridden later down the flow
-	hn := child
+	hn := phild
 
 	// Parse next segment
 	segTyp, _, segRexpat, segTail, segStartIdx, segEndIdx := patNextSegment(search)
 
-	// Add child depending on next up segment
+	// Add phild depending on next up segment
 	switch segTyp {
 
 	case ntStatic:
@@ -241,15 +241,15 @@ func (n *node) addChild(child *node, prefix string) *node {
 		if segTyp == ntRegexp {
 			rex, err := regexp.Compile(segRexpat)
 			if err != nil {
-				panic(fmt.Sprintf("chi: invalid regexp pattern '%s' in route param", segRexpat))
+				panic(fmt.Sprintf("phi: invalid regexp pattern '%s' in route param", segRexpat))
 			}
-			child.prefix = segRexpat
-			child.rex = rex
+			phild.prefix = segRexpat
+			phild.rex = rex
 		}
 
 		if segStartIdx == 0 {
 			// Route starts with a param
-			child.typ = segTyp
+			phild.typ = segTyp
 
 			if segTyp == ntCatchAll {
 				segStartIdx = -1
@@ -259,7 +259,7 @@ func (n *node) addChild(child *node, prefix string) *node {
 			if segStartIdx < 0 {
 				segStartIdx = len(search)
 			}
-			child.tail = segTail // for params, we set the tail
+			phild.tail = segTail // for params, we set the tail
 
 			if segStartIdx != len(search) {
 				// add static edge for the remaining part, split the end.
@@ -273,16 +273,16 @@ func (n *node) addChild(child *node, prefix string) *node {
 					label:  search[0],
 					prefix: search,
 				}
-				hn = child.addChild(nn, search)
+				hn = phild.addChild(nn, search)
 			}
 
 		} else if segStartIdx > 0 {
 			// Route has some param
 
 			// starts with a static segment
-			child.typ = ntStatic
-			child.prefix = search[:segStartIdx]
-			child.rex = nil
+			phild.typ = ntStatic
+			phild.prefix = search[:segStartIdx]
+			phild.rex = nil
 
 			// add the param edge node
 			search = search[segStartIdx:]
@@ -292,30 +292,30 @@ func (n *node) addChild(child *node, prefix string) *node {
 				label: search[0],
 				tail:  segTail,
 			}
-			hn = child.addChild(nn, search)
+			hn = phild.addChild(nn, search)
 
 		}
 	}
 
-	n.children[child.typ] = append(n.children[child.typ], child)
-	n.children[child.typ].Sort()
+	n.phildren[phild.typ] = append(n.phildren[phild.typ], phild)
+	n.phildren[phild.typ].Sort()
 	return hn
 }
 
-func (n *node) replaceChild(label, tail byte, child *node) {
-	for i := 0; i < len(n.children[child.typ]); i++ {
-		if n.children[child.typ][i].label == label && n.children[child.typ][i].tail == tail {
-			n.children[child.typ][i] = child
-			n.children[child.typ][i].label = label
-			n.children[child.typ][i].tail = tail
+func (n *node) replaceChild(label, tail byte, phild *node) {
+	for i := 0; i < len(n.phildren[phild.typ]); i++ {
+		if n.phildren[phild.typ][i].label == label && n.phildren[phild.typ][i].tail == tail {
+			n.phildren[phild.typ][i] = phild
+			n.phildren[phild.typ][i].label = label
+			n.phildren[phild.typ][i].tail = tail
 			return
 		}
 	}
-	panic("chi: replacing missing child")
+	panic("phi: replacing missing phild")
 }
 
 func (n *node) getEdge(ntyp nodeTyp, label, tail byte, prefix string) *node {
-	nds := n.children[ntyp]
+	nds := n.phildren[ntyp]
 	for i := 0; i < len(nds); i++ {
 		if nds[i].label == label && nds[i].tail == tail {
 			if ntyp == ntRegexp && nds[i].prefix != prefix {
@@ -383,12 +383,12 @@ func (n *node) FindRoute(rctx *Context, method methodTyp, path string) (*node, e
 }
 
 // Recursive edge traversal by checking all nodeTyp groups along the way.
-// It's like searching through a multi-dimensional radix trie.
+// It's like searphing through a multi-dimensional radix trie.
 func (n *node) findRoute(rctx *Context, method methodTyp, path string) *node {
 	nn := n
 	search := path
 
-	for t, nds := range nn.children {
+	for t, nds := range nn.phildren {
 		ntyp := nodeTyp(t)
 		if len(nds) == 0 {
 			continue
@@ -411,7 +411,7 @@ func (n *node) findRoute(rctx *Context, method methodTyp, path string) *node {
 			xsearch = xsearch[len(xn.prefix):]
 
 		case ntParam, ntRegexp:
-			// short-circuit and return no matching route for empty param values
+			// short-circuit and return no matphing route for empty param values
 			if xsearch == "" {
 				continue
 			}
@@ -518,7 +518,7 @@ func (n *node) findRoute(rctx *Context, method methodTyp, path string) *node {
 }
 
 func (n *node) findEdge(ntyp nodeTyp, label byte) *node {
-	nds := n.children[ntyp]
+	nds := n.phildren[ntyp]
 	num := len(nds)
 	idx := 0
 
@@ -551,7 +551,7 @@ func (n *node) isLeaf() bool {
 
 func (n *node) findPattern(pattern string) bool {
 	nn := n
-	for _, nds := range nn.children {
+	for _, nds := range nn.phildren {
 		if len(nds) == 0 {
 			continue
 		}
@@ -578,7 +578,7 @@ func (n *node) findPattern(pattern string) bool {
 			idx = longestPrefix(pattern, "*")
 
 		default:
-			panic("chi: unknown node type")
+			panic("phi: unknown node type")
 		}
 
 		xpattern = pattern[idx:]
@@ -647,8 +647,8 @@ func (n *node) walk(fn func(eps endpoints, subroutes Routes) bool) bool {
 		return true
 	}
 
-	// Recurse on the children
-	for _, ns := range n.children {
+	// Recurse on the phildren
+	for _, ns := range n.phildren {
 		for _, cn := range ns {
 			if cn.walk(fn) {
 				return true
@@ -670,7 +670,7 @@ func patNextSegment(pattern string) (nodeTyp, string, string, byte, int, int) {
 
 	// Sanity check
 	if ps >= 0 && ws >= 0 && ws < ps {
-		panic("chi: wildcard '*' must be the last pattern in a route, otherwise use a '{param}'")
+		panic("phi: wildcard '*' must be the last pattern in a route, otherwise use a '{param}'")
 	}
 
 	var tail byte = '/' // Default endpoint tail to / byte
@@ -694,7 +694,7 @@ func patNextSegment(pattern string) (nodeTyp, string, string, byte, int, int) {
 			}
 		}
 		if pe == ps {
-			panic("chi: route param closing delimiter '}' is missing")
+			panic("phi: route param closing delimiter '}' is missing")
 		}
 
 		key := pattern[ps+1 : pe]
@@ -725,7 +725,7 @@ func patNextSegment(pattern string) (nodeTyp, string, string, byte, int, int) {
 
 	// Wildcard pattern as finale
 	if ws < len(pattern)-1 {
-		panic("chi: wildcard '*' must be the last value in a route. trim trailing text or use a '{param}' instead")
+		panic("phi: wildcard '*' must be the last value in a route. trim trailing text or use a '{param}' instead")
 	}
 	return ntCatchAll, "*", "", 0, ws, len(pattern)
 }
@@ -740,7 +740,7 @@ func patParamKeys(pattern string) []string {
 		}
 		for i := 0; i < len(paramKeys); i++ {
 			if paramKeys[i] == paramKey {
-				panic(fmt.Sprintf("chi: routing pattern '%s' contains duplicate param key, '%s'", pattern, paramKey))
+				panic(fmt.Sprintf("phi: routing pattern '%s' contains duplicate param key, '%s'", pattern, paramKey))
 			}
 		}
 		paramKeys = append(paramKeys, paramKey)

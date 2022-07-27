@@ -9,13 +9,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 var testContent = []byte("Hello world!")
 
 func TestThrottleBacklog(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.Use(ThrottleBacklog(10, 50, time.Second*10))
 
@@ -56,7 +56,7 @@ func TestThrottleBacklog(t *testing.T) {
 }
 
 func TestThrottleClientTimeout(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.Use(ThrottleBacklog(10, 50, time.Second*10))
 
@@ -88,7 +88,7 @@ func TestThrottleClientTimeout(t *testing.T) {
 }
 
 func TestThrottleTriggerGatewayTimeout(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.Use(ThrottleBacklog(50, 100, time.Second*5))
 
@@ -144,7 +144,7 @@ func TestThrottleTriggerGatewayTimeout(t *testing.T) {
 }
 
 func TestThrottleMaximum(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.Use(ThrottleBacklog(10, 10, time.Second*5))
 
@@ -205,7 +205,7 @@ func TestThrottleMaximum(t *testing.T) {
 
 // NOTE: test is disabled as it requires some refactoring. It is prone to intermittent failure.
 /*func TestThrottleRetryAfter(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	retryAfterFn := func(ctxDone bool) time.Duration { return time.Hour * 1 }
 	r.Use(ThrottleWithOpts(ThrottleOpts{Limit: 10, RetryAfterFn: retryAfterFn}))

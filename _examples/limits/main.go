@@ -20,12 +20,12 @@ import (
 	"net/http"
 	"time"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 	"github.com/PhilipJovanovic/phi/v5/middleware"
 )
 
 func main() {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)
@@ -44,7 +44,7 @@ func main() {
 	})
 
 	// Slow handlers/operations.
-	r.Group(func(r chi.Router) {
+	r.Group(func(r phi.Router) {
 		// Stop processing after 2.5 seconds.
 		r.Use(middleware.Timeout(2500 * time.Millisecond))
 
@@ -67,7 +67,7 @@ func main() {
 	})
 
 	// Throttle very expensive handlers/operations.
-	r.Group(func(r chi.Router) {
+	r.Group(func(r phi.Router) {
 		// Stop processing after 30 seconds.
 		r.Use(middleware.Timeout(30 * time.Second))
 

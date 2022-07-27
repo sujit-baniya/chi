@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 	"github.com/PhilipJovanovic/phi/v5/middleware"
 )
 
@@ -56,7 +56,7 @@ func main() {
 }
 
 func service() http.Handler {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)

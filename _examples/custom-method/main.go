@@ -3,18 +3,18 @@ package main
 import (
 	"net/http"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 	"github.com/PhilipJovanovic/phi/v5/middleware"
 )
 
 func init() {
-	chi.RegisterMethod("LINK")
-	chi.RegisterMethod("UNLINK")
-	chi.RegisterMethod("WOOHOO")
+	phi.RegisterMethod("LINK")
+	phi.RegisterMethod("UNLINK")
+	phi.RegisterMethod("WOOHOO")
 }
 
 func main() {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {

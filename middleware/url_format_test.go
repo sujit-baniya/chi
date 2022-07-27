@@ -5,11 +5,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/PhilipJovanovic/phi/v5"
 )
 
 func TestURLFormat(t *testing.T) {
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.Use(URLFormat)
 
@@ -18,16 +18,16 @@ func TestURLFormat(t *testing.T) {
 		w.Write([]byte("nothing here"))
 	})
 
-	r.Route("/samples/articles/samples.{articleID}", func(r chi.Router) {
+	r.Route("/samples/articles/samples.{articleID}", func(r phi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			articleID := chi.URLParam(r, "articleID")
+			articleID := phi.URLParam(r, "articleID")
 			w.Write([]byte(articleID))
 		})
 	})
 
-	r.Route("/articles/{articleID}", func(r chi.Router) {
+	r.Route("/articles/{articleID}", func(r phi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			articleID := chi.URLParam(r, "articleID")
+			articleID := phi.URLParam(r, "articleID")
 			w.Write([]byte(articleID))
 		})
 	})

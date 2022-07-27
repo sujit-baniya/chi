@@ -48,10 +48,10 @@ import (
 	"net/http"
 	"strings"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 	"github.com/PhilipJovanovic/phi/v5/middleware"
-	"github.com/go-chi/docgen"
-	"github.com/go-chi/render"
+	"github.com/go-phi/docgen"
+	"github.com/go-phi/render"
 )
 
 var routes = flag.Bool("routes", false, "Generate router documentation")
@@ -59,7 +59,7 @@ var routes = flag.Bool("routes", false, "Generate router documentation")
 func main() {
 	flag.Parse()
 
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)
@@ -80,12 +80,12 @@ func main() {
 	})
 
 	// RESTy routes for "articles" resource
-	r.Route("/articles", func(r chi.Router) {
+	r.Route("/articles", func(r phi.Router) {
 		r.With(paginate).Get("/", ListArticles)
 		r.Post("/", CreateArticle)       // POST /articles
 		r.Get("/search", SearchArticles) // GET /articles/search
 
-		r.Route("/{articleID}", func(r chi.Router) {
+		r.Route("/{articleID}", func(r phi.Router) {
 			r.Use(ArticleCtx)            // Load the *Article on the request context
 			r.Get("/", GetArticle)       // GET /articles/123
 			r.Put("/", UpdateArticle)    // PUT /articles/123
@@ -97,7 +97,7 @@ func main() {
 	})
 
 	// Mount the admin sub-router, which btw is the same as:
-	// r.Route("/admin", func(r chi.Router) { admin routes here })
+	// r.Route("/admin", func(r phi.Router) { admin routes here })
 	r.Mount("/admin", adminRouter())
 
 	// Passing -routes to the program will generate docs for the above
@@ -107,7 +107,7 @@ func main() {
 		// fmt.Println(docgen.JSONRoutesDoc(r))
 		fmt.Println(docgen.MarkdownRoutesDoc(r, docgen.MarkdownOpts{
 			ProjectPath: "github.com/PhilipJovanovic/phi/v5",
-			Intro:       "Welcome to the chi/_examples/rest generated docs.",
+			Intro:       "Welcome to the phi/_examples/rest generated docs.",
 		}))
 		return
 	}
@@ -130,9 +130,9 @@ func ArticleCtx(next http.Handler) http.Handler {
 		var article *Article
 		var err error
 
-		if articleID := chi.URLParam(r, "articleID"); articleID != "" {
+		if articleID := phi.URLParam(r, "articleID"); articleID != "" {
 			article, err = dbGetArticle(articleID)
-		} else if articleSlug := chi.URLParam(r, "articleSlug"); articleSlug != "" {
+		} else if articleSlug := phi.URLParam(r, "articleSlug"); articleSlug != "" {
 			article, err = dbGetArticleBySlug(articleSlug)
 		} else {
 			render.Render(w, r, ErrNotFound)
@@ -148,7 +148,7 @@ func ArticleCtx(next http.Handler) http.Handler {
 	})
 }
 
-// SearchArticles searches the Articles data for a matching article.
+// SearchArticles searches the Articles data for a matphing article.
 // It's just a stub, but you get the idea.
 func SearchArticles(w http.ResponseWriter, r *http.Request) {
 	render.RenderList(w, r, NewArticleListResponse(articles))
@@ -176,7 +176,7 @@ func CreateArticle(w http.ResponseWriter, r *http.Request) {
 // its not due to a bug, then it will panic, and our Recoverer will save us.
 func GetArticle(w http.ResponseWriter, r *http.Request) {
 	// Assume if we've reach this far, we can access the article
-	// context because this handler is a child of the ArticleCtx
+	// context because this handler is a phild of the ArticleCtx
 	// middleware. The worst case, the recoverer middleware will save us.
 	article := r.Context().Value("article").(*Article)
 
@@ -206,7 +206,7 @@ func DeleteArticle(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	// Assume if we've reach this far, we can access the article
-	// context because this handler is a child of the ArticleCtx
+	// context because this handler is a phild of the ArticleCtx
 	// middleware. The worst case, the recoverer middleware will save us.
 	article := r.Context().Value("article").(*Article)
 
@@ -220,8 +220,8 @@ func DeleteArticle(w http.ResponseWriter, r *http.Request) {
 }
 
 // A completely separate router for administrator routes
-func adminRouter() chi.Router {
-	r := chi.NewRouter()
+func adminRouter() phi.Router {
+	r := phi.NewRouter()
 	r.Use(AdminOnly)
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("admin: index"))
@@ -230,7 +230,7 @@ func adminRouter() chi.Router {
 		w.Write([]byte("admin: list accounts.."))
 	})
 	r.Get("/users/{userId}", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(fmt.Sprintf("admin: view user id %v", chi.URLParam(r, "userId"))))
+		w.Write([]byte(fmt.Sprintf("admin: view user id %v", phi.URLParam(r, "userId"))))
 	})
 	return r
 }

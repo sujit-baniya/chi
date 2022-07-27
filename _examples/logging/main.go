@@ -16,7 +16,7 @@ import (
 	"net/http"
 	"time"
 
-	chi "github.com/PhilipJovanovic/phi/v5"
+	phi "github.com/PhilipJovanovic/phi/v5"
 	"github.com/PhilipJovanovic/phi/v5/middleware"
 	"github.com/sirupsen/logrus"
 )
@@ -33,7 +33,7 @@ func main() {
 	}
 
 	// Routes
-	r := chi.NewRouter()
+	r := phi.NewRouter()
 	r.Use(middleware.RequestID)
 	r.Use(NewStructuredLogger(logger))
 	r.Use(middleware.Recoverer)
@@ -54,7 +54,7 @@ func main() {
 
 // StructuredLogger is a simple, but powerful implementation of a custom structured
 // logger backed on logrus. I encourage users to copy it, adapt it and make it their
-// own. Also take a look at https://github.com/go-chi/httplog for a dedicated pkg based
+// own. Also take a look at https://github.com/go-phi/httplog for a dedicated pkg based
 // on this work, designed for context-based http routers.
 
 func NewStructuredLogger(logger *logrus.Logger) func(next http.Handler) http.Handler {

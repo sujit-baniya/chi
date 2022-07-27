@@ -150,6 +150,12 @@ func (mx *Mux) Get(pattern string, handlerFn http.HandlerFunc) {
 	mx.handle(mGET, pattern, handlerFn)
 }
 
+// Get adds the route `pattern` that matches a GET http method to
+// execute the `handlerFn` http.HandlerFunc.
+func (mx *Mux) GET(pattern string, handlerFn Handler) {
+	mx.handle(mGET, pattern, handlerFn)
+}
+
 // Head adds the route `pattern` that matches a HEAD http method to
 // execute the `handlerFn` http.HandlerFunc.
 func (mx *Mux) Head(pattern string, handlerFn http.HandlerFunc) {

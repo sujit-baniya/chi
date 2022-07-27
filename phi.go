@@ -105,6 +105,8 @@ type Router interface {
 	Put(pattern string, h http.HandlerFunc)
 	Trace(pattern string, h http.HandlerFunc)
 
+	GetE(pattern string, h http.Handler)
+
 	// NotFound defines a handler to respond whenever a route could
 	// not be found.
 	NotFound(h http.HandlerFunc)

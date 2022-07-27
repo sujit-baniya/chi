@@ -1,3 +1,3 @@
-module github.com/PhilipJovanovic/phi/v5
+module github.com/PhilipJovanovic/phi
 
-go 1.14
+go 1.18

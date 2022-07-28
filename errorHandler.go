@@ -12,13 +12,14 @@ var (
 )
 
 type ErrorHandler func(w http.ResponseWriter, r *http.Request) error
-type ErrorHandlerFunc func(w http.ResponseWriter, r *http.Request, e error)
 
 func (h ErrorHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h(w, r); err != nil {
 		handler(w, r, err)
 	}
 }
+
+type ErrorHandlerFunc func(w http.ResponseWriter, r *http.Request, e error)
 
 func SetErrorHandler(fn ErrorHandlerFunc) error {
 	if fn == nil {

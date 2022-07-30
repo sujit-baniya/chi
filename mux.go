@@ -188,25 +188,25 @@ func (mx *Mux) Trace(pattern string, handlerFn http.HandlerFunc) {
 
 // Get adds the route `pattern` that matches a GET http method to
 // execute the `handlerFn` http.HandlerFunc wrapped into errorHandler functionality.
-func (mx *Mux) GET(pattern string, handler func(w http.ResponseWriter, r *http.Request) error) {
+func (mx *Mux) GET(pattern string, handler func(w http.ResponseWriter, r *http.Request) *Error) {
 	mx.handle(mGET, pattern, ErrorHandler(handler))
 }
 
 // Get adds the route `pattern` that matches a GET http method to
 // execute the `handlerFn` http.HandlerFunc wrapped into errorHandler functionality.
-func (mx *Mux) POST(pattern string, handler func(w http.ResponseWriter, r *http.Request) error) {
+func (mx *Mux) POST(pattern string, handler func(w http.ResponseWriter, r *http.Request) *Error) {
 	mx.handle(mPOST, pattern, ErrorHandler(handler))
 }
 
 // Get adds the route `pattern` that matches a GET http method to
 // execute the `handlerFn` http.HandlerFunc wrapped into errorHandler functionality.
-func (mx *Mux) PUT(pattern string, handler func(w http.ResponseWriter, r *http.Request) error) {
+func (mx *Mux) PUT(pattern string, handler func(w http.ResponseWriter, r *http.Request) *Error) {
 	mx.handle(mPUT, pattern, ErrorHandler(handler))
 }
 
 // Get adds the route `pattern` that matches a GET http method to
 // execute the `handlerFn` http.HandlerFunc wrapped into errorHandler functionality.
-func (mx *Mux) DELETE(pattern string, handler func(w http.ResponseWriter, r *http.Request) error) {
+func (mx *Mux) DELETE(pattern string, handler func(w http.ResponseWriter, r *http.Request) *Error) {
 	mx.handle(mDELETE, pattern, ErrorHandler(handler))
 }
 

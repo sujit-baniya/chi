@@ -6,12 +6,17 @@ import (
 )
 
 var (
-	handler = func(w http.ResponseWriter, r *http.Request, e error) {
+	handler = func(w http.ResponseWriter, r *http.Request, e *Error) {
 		w.Write([]byte("unknown error"))
 	}
 )
 
-type ErrorHandler func(w http.ResponseWriter, r *http.Request) error
+type Error struct {
+	Error   string
+	Message string
+}
+
+type ErrorHandler func(w http.ResponseWriter, r *http.Request) *Error
 
 func (h ErrorHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h(w, r); err != nil {
@@ -19,7 +24,7 @@ func (h ErrorHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type ErrorHandlerFunc func(w http.ResponseWriter, r *http.Request, e error)
+type ErrorHandlerFunc func(w http.ResponseWriter, r *http.Request, e *Error)
 
 func SetErrorHandler(fn ErrorHandlerFunc) error {
 	if fn == nil {

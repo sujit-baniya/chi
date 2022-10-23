@@ -2,9 +2,14 @@ package chi
 
 import "net/http"
 
+type Config struct {
+	NotFoundHandler         http.HandlerFunc
+	MethodNotAllowedHandler http.HandlerFunc
+}
+
 // NewRouter returns a new Mux object that implements the Router interface.
-func NewRouter() *Mux {
-	return NewMux()
+func NewRouter(config ...Config) *Mux {
+	return NewMux(config...)
 }
 
 // Router consisting of the core routing methods used by phi's Mux,

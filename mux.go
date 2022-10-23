@@ -45,12 +45,23 @@ type Mux struct {
 	// Controls the behaviour of middleware chain generation when a mux
 	// is registered as an inline group inside another mux.
 	inline bool
+	config Config
 }
 
 // NewMux returns a newly initialized Mux object that implements the Router
 // interface.
-func NewMux() *Mux {
-	mux := &Mux{tree: &node{}, pool: &sync.Pool{}}
+func NewMux(cfg ...Config) *Mux {
+	var config Config
+	if len(cfg) > 0 {
+		config = cfg[0]
+	}
+	mux := &Mux{
+		tree:                    &node{},
+		pool:                    &sync.Pool{},
+		notFoundHandler:         config.NotFoundHandler,
+		methodNotAllowedHandler: config.MethodNotAllowedHandler,
+		config:                  config,
+	}
 	mux.pool.New = func() interface{} {
 		return NewRouteContext()
 	}
@@ -286,13 +297,13 @@ func (mx *Mux) Group(fn func(r Router)) Router {
 }
 
 // Route creates a new Mux with a fresh middleware stack and mounts it
-// along the `pattern` as a subrouter. Effectively, this is a short-hand
+// along the `pattern` as a subrouter. Effectively, this is a shorthand
 // call to Mount. See _examples/.
 func (mx *Mux) Route(pattern string, fn func(r Router)) Router {
 	if fn == nil {
 		panic(fmt.Sprintf("phi: attempting to Route() a nil subrouter on '%s'", pattern))
 	}
-	subRouter := NewRouter()
+	subRouter := NewRouter(mx.config)
 	fn(subRouter)
 	mx.Mount(pattern, subRouter)
 	return subRouter

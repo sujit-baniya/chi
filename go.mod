@@ -1,3 +1,3 @@
-module github.com/PhilipJovanovic/phi
+module github.com/sujit-baniya/chi
 
-go 1.18
+go 1.19

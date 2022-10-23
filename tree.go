@@ -1,4 +1,4 @@
-package phi
+package chi
 
 // Radix tree implementation below is a based on the original work by
 // Armon Dadgar in https://github.com/armon/go-radix/blob/master/radix.go

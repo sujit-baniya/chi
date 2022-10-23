@@ -1,4 +1,4 @@
-package phi
+package chi
 
 import "net/http"
 

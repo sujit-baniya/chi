@@ -830,9 +830,7 @@ func Walk(r Routes, walkFn WalkFunc) error {
 
 func walk(r Routes, walkFn WalkFunc, parentRoute string, parentMw ...func(http.Handler) http.Handler) error {
 	for _, route := range r.Routes() {
-		mws := make([]func(http.Handler) http.Handler, len(parentMw))
-		copy(mws, parentMw)
-		mws = append(mws, r.Middlewares()...)
+		mws := r.Middlewares()
 
 		if route.SubRoutes != nil {
 			if err := walk(route.SubRoutes, walkFn, parentRoute+route.Pattern, mws...); err != nil {
@@ -851,7 +849,7 @@ func walk(r Routes, walkFn WalkFunc, parentRoute string, parentMw ...func(http.H
 			fullRoute = strings.Replace(fullRoute, "/*/", "/", -1)
 
 			if chain, ok := handler.(*ChainHandler); ok {
-				if err := walkFn(method, fullRoute, chain.Endpoint, append(mws, chain.Middlewares...)...); err != nil {
+				if err := walkFn(method, fullRoute, chain.Endpoint, chain.Middlewares...); err != nil {
 					return err
 				}
 			} else {
